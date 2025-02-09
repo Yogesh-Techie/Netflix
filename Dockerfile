@@ -1,5 +1,6 @@
 FROM node:16.17.0-alpine as builder
 WORKDIR /app
+RUN npm install -g yarn 
 COPY ./package.json .
 COPY ./yarn.lock .
 RUN yarn install
@@ -14,4 +15,4 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=builder /app/dist .
 EXPOSE 80
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["npm","nginx", "-g", "daemon off;"]
